@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { useCart } from '../context/CartContext';
 import { useState } from 'react';
 
 export default function Navigation() {
   const { isLoggedIn, isAdmin, logout } = useAuth();
   const { darkMode, toggleTheme } = useTheme();
+  const { itemCount } = useCart();
   const [adminMenuOpen, setAdminMenuOpen] = useState(false);
 
   return (
@@ -114,6 +116,32 @@ export default function Navigation() {
                 </svg>
               )}
             </button>
+            <Link
+              to="/cart"
+              className={`relative p-2 ${darkMode ? 'text-light hover:text-primary' : 'text-gray-700 hover:text-primary'} transition-colors`}
+              aria-label={`Shopping cart, ${itemCount} ${itemCount === 1 ? 'item' : 'items'}`}
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.3 2.3a1 1 0 00.7 1.7H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              {itemCount > 0 && (
+                <span
+                  data-testid="cart-badge"
+                  className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full min-w-[1.25rem] h-5 px-1 flex items-center justify-center"
+                >
+                  {itemCount}
+                </span>
+              )}
+            </Link>
             {isLoggedIn ? (
               <>
                 <span
