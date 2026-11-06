@@ -61,7 +61,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       shipping,
       grandTotal: subtotal - discount + shipping,
       addItem: (item, quantity = 1) => {
-        if (quantity < 1) return;
+        if (quantity < 1) {return;}
         setItems((prev) =>
           prev.some((i) => i.productId === item.productId)
             ? prev.map((i) =>
@@ -83,7 +83,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       },
       applyCoupon: (code) => {
         const valid = code.trim().toUpperCase() === COUPON_CODE;
-        if (valid) setDiscountRate(COUPON_DISCOUNT_RATE);
+        if (valid) {setDiscountRate(COUPON_DISCOUNT_RATE);}
         return valid;
       },
     };
